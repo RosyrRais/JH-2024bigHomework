@@ -1,5 +1,7 @@
 import loginAPI from "./login/loginAPI";
+import registerAPI from "./login/registerAPI";
 
-export default {
+export {
   loginAPI,
+  registerAPI,
 }

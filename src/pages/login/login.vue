@@ -5,14 +5,34 @@
     <div>密码</div>
   </div>
   <div style="width: 200px;">
-    <input type="text">
-    <input type="password">
+    <input type="text" v-model="username">
+    <input type="password" v-model="password">
   </div>
 </div>
-<input type="button" value="确认" style="position: relative;left: 40%;margin-top: 20px;">
+<input type="button" value="确认" @click="actLogin" style="position: relative;left: 40%;margin-top: 20px;">
 </template>
 
 <script setup lang="ts">
+import { useRequest } from 'vue-hooks-plus';
+import { loginAPI } from '@/apis';
+import { ref } from 'vue';
+
+const username = ref();
+const password = ref();
+
+const actLogin = () => {
+  useRequest(() => loginAPI({
+    username: username.value,
+    password: password.value,
+  }), {
+    onSuccess(res: any) {
+      console.log(res);
+      if(res.code === 200) {
+        //login success
+      }
+    },
+  })
+}
 
 </script>
 

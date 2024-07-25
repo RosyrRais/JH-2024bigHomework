@@ -4,7 +4,7 @@ const loginAPI = (data: {
   username: string,
   password: string
 }) => {
-  return request("/api/admin/login", {
+  return request("/api/user/login", {
     data: data,
     method: "POST",
   });
