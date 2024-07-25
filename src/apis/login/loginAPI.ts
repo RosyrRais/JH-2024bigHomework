@@ -1,4 +1,4 @@
-import { request } from "../axios";
+import { request } from "@/apis/axios";
 
 const loginAPI = (data: {
   username: string,
