@@ -5,10 +5,10 @@
       <div>学号/工号</div>
       <div>密码</div>
     </div>
-    <div style="width: 200px;">
-      <input type="text" v-model="name">
-      <input type="text" v-model="username">
-      <input type="password" v-model="password">
+    <div style="width: 200px; padding-top: 20px;">
+      <input type="text" v-model="name"/>
+      <input type="text" v-model="username"/>
+      <input type="password" v-model="password"/>
       <div>
         <input type="radio" v-model="user_type" name="identity" :value="1"> 学生
         <input type="radio" v-model="user_type" name="identity" :value="2"> 教师
@@ -22,7 +22,9 @@
 import { useRequest } from 'vue-hooks-plus';
 import { registerAPI } from '@/apis';
 import { ref } from 'vue';
+import { useNotification } from 'naive-ui';
 
+const notification = useNotification();
 const name = ref();
 const username = ref();
 const password = ref();
@@ -37,6 +39,21 @@ const actRegister = () => {
   }), {
     onSuccess(res: any) {
       console.log(res);
+      if(res.code === 200) {
+        notification.info({
+          content: "注册成功",
+          meta: "请返回登录页登录",
+          duration: 1000,
+          keepAliveOnHover: true,
+        })
+      } else {
+        notification.warning({
+          content: "注册失败",
+          meta: res.msg,
+          duration: 1000,
+          keepAliveOnHover: true,
+        })
+      }
     }
   })
 }
