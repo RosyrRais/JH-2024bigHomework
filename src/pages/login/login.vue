@@ -16,7 +16,10 @@
 import { useRequest } from 'vue-hooks-plus';
 import { loginAPI } from '@/apis';
 import { ref } from 'vue';
+import { useNotification } from 'naive-ui';
+import router from '..';
 
+const notification = useNotification();
 const username = ref();
 const password = ref();
 
@@ -28,7 +31,20 @@ const actLogin = () => {
     onSuccess(res: any) {
       console.log(res);
       if(res.code === 200) {
-        //login success
+        notification.info({
+          content: "登录成功",
+          meta: "正在跳转到首页",
+          duration: 1000,
+          keepAliveOnHover: true,
+        })
+        router.push("/");
+      } else {
+        notification.warning({
+          content: "登录失败",
+          meta: res.msg,
+          duration: 1000,
+          keepAliveOnHover: true,
+        })
       }
     },
   })
