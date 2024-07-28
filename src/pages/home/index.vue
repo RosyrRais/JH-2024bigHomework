@@ -8,6 +8,7 @@
       <div v-if="!userStore.loginSession" @click="() => router.push('/login')">登录</div>
     </div>
     <div class="contentWrap">
+      <ground v-show="homeState === 0"/>
       <post v-show="homeState === 1"/>
     </div>
   </div>
@@ -18,6 +19,7 @@ import { useMainStore } from '@/stores';
 import { ref } from 'vue';
 import router from '..';
 import post from './post.vue';
+import ground from './ground.vue';
 import { useNotification } from 'naive-ui';
 
 const notification = useNotification();
@@ -52,7 +54,7 @@ const logout = () => {
 .leftBar {
   width: 260px;
   height: 100vh;
-  padding: 30px 0 0 40px;
+  padding-left: 40px;
   border-right: solid 3px #0ba2e3;
 
   display: flex;
@@ -72,6 +74,7 @@ const logout = () => {
 }
 
 .leftBar div:first-child {
+  margin-top: 30px;
   padding-left: 5px;
   font-size: 23px;
   font-weight: 700;
