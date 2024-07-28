@@ -11,12 +11,16 @@
       </div>
     </div>
   </div>
+  <div class="backHome" @click="() => router.push('/')">
+    返回主页
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import Login from "./login.vue";
 import register from './register.vue';
+import router from '..';
 
 const chooseLogin = ref<boolean>(false);
 
@@ -73,5 +77,21 @@ const changeChoose = (choose: boolean) => {
     border-bottom-right-radius: 5px;
     padding: 20px;
 }
+}
+
+.backHome {
+  position: fixed;
+  left: 60px;
+  top: 40px;
+
+  cursor: pointer;
+  border: solid 2px #3a68b7;
+  border-radius: 3px;
+  padding: 5px 15px;
+}
+
+.backHome:hover {
+  border-color: #94bbff;
+  background-color: #94bbff;
 }
 </style>

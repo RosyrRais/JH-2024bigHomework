@@ -18,7 +18,9 @@ import { loginAPI } from '@/apis';
 import { ref } from 'vue';
 import { useNotification } from 'naive-ui';
 import router from '..';
+import { useMainStore } from '@/stores';
 
+const userStore = useMainStore().useUserStore();
 const notification = useNotification();
 const username = ref();
 const password = ref();
@@ -38,6 +40,8 @@ const actLogin = () => {
           keepAliveOnHover: true,
         })
         router.push("/");
+        userStore.setUserStates(res.data.user_id, res.data.user_type);
+        userStore.setUserName(username.value);
       } else {
         notification.warning({
           content: "登录失败",
