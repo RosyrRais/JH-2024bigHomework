@@ -11,13 +11,15 @@ const useUserStore = defineStore("login", () => {
         userType.value = type;
     }
 
-    const userName = ref();
+    const userName = ref("游客");
     const setUserName = (name: string) => {
         userName.value = name;
     }
 
     const resetUserStates = () => {
         loginSession.value = false;
+        userId.value = -1;
+        userName.value = "游客";
     }
 
     return{

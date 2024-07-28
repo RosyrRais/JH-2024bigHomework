@@ -1,11 +1,11 @@
 <template>
-  <n-message-provider>
+  <n-modal-provider>
     <n-notification-provider>
       <router-view />
     </n-notification-provider>
-  </n-message-provider>
+  </n-modal-provider>
 </template>
 
 <script setup lang="ts">
-import { NNotificationProvider, NMessageProvider } from 'naive-ui';
+import { NNotificationProvider, NModalProvider } from 'naive-ui';
 </script>
