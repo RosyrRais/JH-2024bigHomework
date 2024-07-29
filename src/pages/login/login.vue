@@ -31,7 +31,6 @@ const actLogin = () => {
     password: password.value,
   }), {
     onSuccess(res: any) {
-      console.log(res);
       if(res.code === 200) {
         notification.info({
           content: "登录成功",

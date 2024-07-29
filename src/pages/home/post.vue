@@ -7,7 +7,15 @@
     </div>
     <div>
       <div class="postTitle">举报审批</div>
-      <div>content</div>
+      <div class="reportContent">
+        <report-modal
+        v-for="rep in reportList"
+        :post-id="rep.id"
+        :post-content="rep.content"
+        :report-content="rep.reason"
+        :status="rep.status"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -15,14 +23,35 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRequest } from 'vue-hooks-plus';
-import { addPostAPI } from '@/apis';
+import { addPostAPI, checkReportAPI } from '@/apis';
 import { useMainStore } from '@/stores';
 import { useNotification } from 'naive-ui';
+import { reportModal } from '@/components';
 
 const notification = useNotification();
 const userStore = useMainStore().useUserStore();
 
 const postContent = ref();
+const reportList = ref();
+
+useRequest(() => checkReportAPI({
+  user_id: userStore.userId
+}), {
+  onSuccess(res: any) {
+    console.log(res);
+    if(res.code === 200) {
+      reportList.value = res.data.post_list;
+      console.log(reportList.value);
+    } else {
+      notification.error({
+        content: "举报信息加载失败",
+        meta: res.msg,
+        duration: 1000,
+        keepAliveOnHover: true,
+      })
+    }
+  }
+})
 
 const addPost = () => {
   if(postContent.value !== "" && postContent.value !== undefined) {
@@ -75,6 +104,12 @@ const addPost = () => {
 }
 
 .publishWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reportContent {
   display: flex;
   flex-direction: column;
   gap: 10px;
