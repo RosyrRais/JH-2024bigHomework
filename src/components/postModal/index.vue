@@ -4,13 +4,19 @@
     <div class="postModalContent">{{ postContent }}</div>
     <div class="postModalBtns">
       <button @click="reportModal = true">举报</button>
-      <button>修改</button>
+      <button @click="changeModal = true">修改</button>
       <button @click="deletePost">删除</button>
     </div>
     <n-modal v-model:show="reportModal">
       <n-card title="举报" style="width: 300px;">
         <span style="margin-right: 10px;">举报理由</span><input type="text" v-model="reportContent">
         <button @click="reportPost" style="float: right;margin-top: 20px;">举报</button>
+      </n-card>
+    </n-modal>
+    <n-modal v-model:show="changeModal">
+      <n-card title="修改" style="width: 300px;">
+        <span style="margin-right: 10px;">更改为</span><input type="text" v-model="changeContent">
+        <button @click="changePost" style="float: right;margin-top: 20px;">提交</button>
       </n-card>
     </n-modal>
   </div>
@@ -20,7 +26,7 @@
 import { ref } from 'vue';
 import { NModal, NCard } from 'naive-ui';
 import { useRequest } from 'vue-hooks-plus';
-import { reportPostAPI, deletePostAPI } from '@/apis';
+import { reportPostAPI, deletePostAPI, editPostAPI } from '@/apis';
 import { useMainStore } from '@/stores';
 import { useNotification } from 'naive-ui';
 
@@ -34,7 +40,9 @@ const props = defineProps<{
 }>();
 
 const reportModal = ref(false);
+const changeModal = ref(false);
 const reportContent = ref("");
+const changeContent = ref("");
 
 const reportPost = () => {
   useRequest(() => reportPostAPI({
@@ -54,6 +62,32 @@ const reportPost = () => {
       } else {
         notification.warning({
           content: "反馈失败",
+          meta: res.msg,
+          duration: 1000,
+          keepAliveOnHover: true,
+        })
+      }
+    }
+  })
+}
+
+const changePost = () => {
+  useRequest(() => editPostAPI({
+    user_id: userStore.userId,
+    post_id: props.postId,
+    content: changeContent.value,
+  }), {
+    onSuccess(res: any) {
+      if(res.code === 200) {
+        changeModal.value = false;
+        notification.success({
+          content: "更改成功",
+          duration: 1000,
+          keepAliveOnHover: true,
+        })
+      } else {
+        notification.warning({
+          content: "更改失败",
           meta: res.msg,
           duration: 1000,
           keepAliveOnHover: true,
