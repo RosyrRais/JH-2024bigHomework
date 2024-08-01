@@ -10,7 +10,7 @@
       <div class="reportContent">
         <report-modal
         v-for="rep in reportList"
-        :post-id="rep.id"
+        :post-id="rep.post_id"
         :post-content="rep.content"
         :report-content="rep.reason"
         :status="rep.status"
@@ -38,10 +38,8 @@ useRequest(() => checkReportAPI({
   user_id: userStore.userId
 }), {
   onSuccess(res: any) {
-    console.log(res);
     if(res.code === 200) {
-      reportList.value = res.data.post_list;
-      console.log(reportList.value);
+      reportList.value = res.data.report_list;
     } else {
       notification.error({
         content: "举报信息加载失败",

@@ -6,6 +6,8 @@ import reportPostAPI from "./home/reportPostAPI";
 import deletePostAPI from "./home/deletePostAPI";
 import checkReportAPI from "./home/checkReportAPI";
 import editPostAPI from "./home/editPostAPI";
+import getReportListAPI from "./manage/getReportListAPI";
+import editReportAPI from "./manage/editReportAPI";
 
 export {
   loginAPI,
@@ -16,4 +18,6 @@ export {
   deletePostAPI,
   checkReportAPI,
   editPostAPI,
+  getReportListAPI,
+  editReportAPI,
 }

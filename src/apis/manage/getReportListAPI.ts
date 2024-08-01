@@ -1,12 +1,12 @@
 import { request } from "@/apis/axios";
 
-const checkReportAPI = (data: {
+const getReportListAPI = (data: {
   user_id: number
 }) => {
-  return request("/api/student/report-post", {
+  return request("/api/admin/report", {
     params: data,
     method: "GET",
   });
 };
 
-export default checkReportAPI;
+export default getReportListAPI;
